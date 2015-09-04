@@ -101,9 +101,9 @@ public:
 //!
 class OptArgvIter : public OptIterRwd {
 private:
-   int            ndx;   // index of current arg
-   int            ac;    // arg count
-   const char * const * av;  // arg vector
+   int            ndx;   //!< index of current arg
+   int            ac;    //!< arg count
+   const char * const * av;  //!< arg vector
 
 public:
    OptArgvIter(const char * const argv[])
@@ -136,13 +136,13 @@ public:
 //!
 class OptStrTokIter : public OptIterRwd {
 private:
-   unsigned     len;        // length of token-string
-   const char * str;        // the token-string
-   const char * seps;       // delimiter-set (separator-characters)
-   const char * cur;        // current token
-   char       * tokstr;     // our copy of the token-string
+   unsigned     len;        //!< length of token-string
+   const char * str;        //!< the token-string
+   const char * seps;       //!< delimiter-set (separator-characters)
+   const char * cur;        //!< current token
+   char       * tokstr;     //!< our copy of the token-string
 
-   static const char * default_delims;  // default delimiters = whitespace
+   static const char * default_delims;  //!< default delimiters = whitespace
 
 public:
    OptStrTokIter(const char * tokens, const char * delimiters =0);
@@ -222,8 +222,8 @@ public:
 //! \code
 //!   #include <options.h>
 //!
-//!   Options opts(cmdname, optv);
 //!   char cmdname[], *optv[];
+//!   Options opts(cmdname, optv);
 //! \endcode
 //! \section Description
 //! The Options constructor expects a command-name (usually argv[0]) and
@@ -305,9 +305,9 @@ public:
 //! options. The following are all equivalent (if "-l" is a multi-valued
 //! option and "-x" is an option that takes no value):
 //!
-//!    cmdname -x -l item1 item2 item3 -- arg1 arg2 arg3
-//!    cmdname -x -litem1 -litem2 -litem3 -- arg1 arg2 arg3
-//!    cmdname -l item1 item2 item3 -x arg1 arg2 arg3
+//!    - cmdname -x -l item1 item2 item3 -- arg1 arg2 arg3
+//!    - cmdname -x -litem1 -litem2 -litem3 -- arg1 arg2 arg3
+//!    - cmdname -l item1 item2 item3 -x arg1 arg2 arg3
 //!
 //!
 //! \code
@@ -410,21 +410,21 @@ public:
       PLUS       = 0x04,  //!< Allow "+" as a long-option prefix
       SHORT_ONLY = 0x08,  //!< Dont accept long-options
       LONG_ONLY  = 0x10,  //!< Dont accept short-options
-                            //!< (also allows "-" as a long-option prefix).
+                          //! (also allows "-" as a long-option prefix).
       NOGUESSING = 0x20,  //!< Normally, when we see a short (long) option
-                            //!< on the command line that doesnt match any
-                            //!< known short (long) options, then we try to
-                            //!< "guess" by seeing if it will match any known
-                            //!< long (short) option. Setting this mask prevents
-                            //!< this "guessing" from occurring.
+                          //! on the command line that doesnt match any
+                          //! known short (long) options, then we try to
+                          //! "guess" by seeing if it will match any known
+                          //! long (short) option. Setting this mask prevents
+                          //! this "guessing" from occurring.
       PARSE_POS = 0x40    //!< By default, Options will not present positional
-                            //!< command-line arguments to the user and will
-                            //!< instead stop parsing when the first positonal
-                            //!< argument has been encountered. If this flag
-                            //!< is given, Options will present positional
-                            //!< arguments to the user with a return code of
-                            //!< POSITIONAL; ENDOPTS will be returned only
-                            //!< when the end of the argument list is reached.
+                          //! command-line arguments to the user and will
+                          //! instead stop parsing when the first positonal
+                          //! argument has been encountered. If this flag
+                          //! is given, Options will present positional
+                          //! arguments to the user with a return code of
+                          //! POSITIONAL; ENDOPTS will be returned only
+                          //! when the end of the argument list is reached.
    } ;
 
       //! Error return values for operator()
@@ -460,6 +460,8 @@ public:
 
       //! usage() prints options usage (followed by any positional arguments
       //! listed in the parameter "positionals") on the given outstream
+      //! \param os where to print the usage
+      //! \param positionals command-line syntax for any positional args
    void
    usage(std::ostream & os, const char * positionals) const ;
 
@@ -491,6 +493,9 @@ public:
       //! Unless Options::QUIET is used, missing option-arguments and
       //! invalid options (and the like) will automatically cause error
       //! messages to be issued to cerr.
+      //!
+      //! \param iter option iterator
+      //! \param optarg where to store any option-argument
    int
    operator()(OptIter & iter, const char * & optarg) ;
 
